@@ -1,6 +1,14 @@
 # LangChain IBM Watsonx Sentiment Analysis Project
 
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![LangChain](https://img.shields.io/badge/LangChain-1.2.6+-green.svg)](https://python.langchain.com/)
+[![IBM Watsonx](https://img.shields.io/badge/IBM-Watsonx-orange.svg)](https://www.ibm.com/products/watsonx)
+
 Bu proje, IBM Watsonx (Granite) modelini kullanarak LangChain ile metin analizi ve duygu analizi (sentiment analysis) yapan bir Python uygulamasıdır. Proje, müşteri geri bildirimlerini, yorumları veya herhangi bir metni analiz ederek özet ve duygu analizi çıkarır.
+
+**📦 GitHub Repository**: [langchain-watsonx-sentiment-analysis](https://github.com/your-username/langchain-watsonx-sentiment-analysis)
+
+> **Not**: GitHub repository linkindeki `your-username` kısmını kendi GitHub kullanıcı adınızla değiştirmeyi unutmayın.
 
 ## 📋 İçindekiler
 
@@ -88,10 +96,19 @@ Bu proje aşağıdaki durumlarda kullanılabilir:
 
 ### 1. Projeyi Klonlayın veya İndirin
 
+**HTTPS ile:**
 ```bash
-git clone <repository-url>
-cd langchain-example
+git clone https://github.com/your-username/langchain-watsonx-sentiment-analysis.git
+cd langchain-watsonx-sentiment-analysis
 ```
+
+**SSH ile:**
+```bash
+git clone git@github.com:your-username/langchain-watsonx-sentiment-analysis.git
+cd langchain-watsonx-sentiment-analysis
+```
+
+> **Not**: `your-username` kısmını kendi GitHub kullanıcı adınızla değiştirin.
 
 ### 2. Sanal Ortam Oluşturun (Önerilen)
 
@@ -201,12 +218,13 @@ keyword_prompt = PromptTemplate(
 ## 📁 Proje Yapısı
 
 ```
-langchain-example/
+langchain-watsonx-sentiment-analysis/
 │
 ├── main.py              # Ana uygulama dosyası
 ├── main.ipynb           # Jupyter notebook versiyonu (opsiyonel)
-├── .env                 # Ortam değişkenleri (oluşturulmalı)
+├── .env                 # Ortam değişkenleri (oluşturulmalı, .gitignore'da)
 ├── .env.example         # Örnek .env dosyası (opsiyonel)
+├── .gitignore           # Git ignore dosyası
 ├── README.md            # Bu dosya
 └── requirements.txt     # Python bağımlılıkları (opsiyonel)
 ```
