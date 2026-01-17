@@ -313,12 +313,6 @@ result = workflow.invoke({"text": complaint_text})
 print(result.get("refined_summary", result))
 ```
 
-## 📚 Ek Kaynaklar
-
-- [LangChain Dokümantasyonu](https://python.langchain.com/)
-- [IBM Watsonx Dokümantasyonu](https://www.ibm.com/products/watsonx)
-- [LangChain IBM Entegrasyonu](https://python.langchain.com/docs/integrations/llms/ibm_watsonx)
-
 ## 🤝 Katkıda Bulunma
 
 1. Bu repository'yi fork edin
