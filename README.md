@@ -8,8 +8,6 @@ Bu proje, IBM Watsonx (Granite) modelini kullanarak LangChain ile metin analizi 
 
 **📦 GitHub Repository**: [langchain-watsonx-sentiment-analysis](https://github.com/your-username/langchain-watsonx-sentiment-analysis)
 
-> **Not**: GitHub repository linkindeki `your-username` kısmını kendi GitHub kullanıcı adınızla değiştirmeyi unutmayın.
-
 ## 📋 İçindekiler
 
 - [Proje Hakkında](#proje-hakkında)
@@ -22,7 +20,8 @@ Bu proje, IBM Watsonx (Granite) modelini kullanarak LangChain ile metin analizi 
 - [Proje Yapısı](#proje-yapısı)
 - [Mimari Açıklama](#mimari-açıklama)
 - [Örnekler](#örnekler)
-- [Sorun Giderme](#sorun-giderme)
+- [Ek Kaynaklar](#ek-kaynaklar)
+- [Katkıda Bulunma](#katkıda-bulunma)
 
 ## 🎯 Proje Hakkında
 
@@ -32,7 +31,7 @@ Bu proje, IBM Watsonx'in Granite-4-H-Small modelini kullanarak üç aşamalı bi
 2. **Duygu Özeti (Sentiment Summary)**: Anahtar kelimelerden yola çıkarak metnin genel duygusunu özetler
 3. **Rafine Etme (Refinement)**: Özeti daha kısa ve kesin hale getirir
 
-Proje, LangChain'in modern **LCEL (LangChain Expression Language)** yaklaşımını kullanarak bu işlemleri sıralı bir şekilde gerçekleştirir. Deprecated `LLMChain` ve `SequentialChain` yerine `RunnableLambda` ve pipe operatörü (`|`) kullanılmaktadır.
+Proje, LangChain'in modern **LCEL (LangChain Expression Language)** yaklaşımını kullanarak bu işlemleri sıralı bir şekilde gerçekleştirir.
 
 ## ✨ Özellikler
 
@@ -42,7 +41,6 @@ Proje, LangChain'in modern **LCEL (LangChain Expression Language)** yaklaşımı
 - 📊 **Sentiment Analysis**: Metinlerin duygusal tonunu analiz eder
 - 🎯 **Keyword Extraction**: Metinlerden önemli anahtar kelimeler çıkarır
 - ✨ **Text Refinement**: Çıktıları daha okunabilir hale getirir
-- ⚡ **Deprecated-Free**: Modern LangChain API'leri kullanır, uyarı vermez
 
 ## 🚀 Kullanım Senaryoları
 
@@ -84,8 +82,6 @@ Bu proje aşağıdaki durumlarda kullanılabilir:
 - `langchain-ibm` (1.0.2+)
 - `python-dotenv` (0.19.0+)
 
-**Not**: Bu proje modern LangChain LCEL yaklaşımını kullandığı için `langchain-classic` paketine ihtiyaç duymaz.
-
 ### IBM Cloud Gereksinimleri
 - IBM Cloud hesabı
 - Watson Machine Learning servisi
@@ -98,17 +94,15 @@ Bu proje aşağıdaki durumlarda kullanılabilir:
 
 **HTTPS ile:**
 ```bash
-git clone https://github.com/your-username/langchain-watsonx-sentiment-analysis.git
+git clone https://github.com/suayip-isik/langchain-watsonx-sentiment-analysis.git
 cd langchain-watsonx-sentiment-analysis
 ```
 
 **SSH ile:**
 ```bash
-git clone git@github.com:your-username/langchain-watsonx-sentiment-analysis.git
+git clone git@github.com:suayip-isik/langchain-watsonx-sentiment-analysis.git
 cd langchain-watsonx-sentiment-analysis
 ```
-
-> **Not**: `your-username` kısmını kendi GitHub kullanıcı adınızla değiştirin.
 
 ### 2. Sanal Ortam Oluşturun (Önerilen)
 
@@ -124,14 +118,6 @@ venv\Scripts\activate  # Windows
 ```bash
 pip install langchain langchain-core langchain-ibm python-dotenv
 ```
-
-veya `requirements.txt` dosyası oluşturup:
-
-```bash
-pip install -r requirements.txt
-```
-
-**Not**: `langchain-classic` paketi artık gerekli değildir çünkü proje modern LCEL yaklaşımını kullanmaktadır.
 
 ## ⚙️ Yapılandırma
 
@@ -194,7 +180,6 @@ print(result.get("refined_summary", result))
 ```python
 llm = WatsonxLLM(
     model_id="ibm/granite-4-h-small",  # Varsayılan model (güncel)
-    # model_id="ibm/granite-3-8b-instruct",  # Eski model (deprecated)
     url=credentials["url"],
     apikey=credentials["apikey"],
     project_id=project_id,
@@ -203,8 +188,6 @@ llm = WatsonxLLM(
     }
 )
 ```
-
-**Not**: `ibm/granite-3-8b-instruct` modeli deprecated durumdadır. Yeni projeler için `ibm/granite-4-h-small` kullanılması önerilir.
 
 #### Prompt Şablonlarını Değiştirme
 
@@ -221,7 +204,6 @@ keyword_prompt = PromptTemplate(
 langchain-watsonx-sentiment-analysis/
 │
 ├── main.py              # Ana uygulama dosyası
-├── main.ipynb           # Jupyter notebook versiyonu (opsiyonel)
 ├── .env                 # Ortam değişkenleri (oluşturulmalı, .gitignore'da)
 ├── .env.example         # Örnek .env dosyası (opsiyonel)
 ├── .gitignore           # Git ignore dosyası
@@ -252,26 +234,6 @@ Output
 3. **RunnableLambda**: Her aşamayı temsil eden fonksiyon tabanlı runnable bileşenleri
 4. **LCEL Pipeline**: Pipe operatörü (`|`) ile birleştirilmiş sıralı workflow
 5. **extract_text()**: LLM yanıtlarından metin içeriğini çıkaran yardımcı fonksiyon
-
-### Modern Yaklaşım: LCEL (LangChain Expression Language)
-
-Bu proje, deprecated `LLMChain` ve `SequentialChain` yerine modern LCEL yaklaşımını kullanır:
-
-```python
-# Eski yaklaşım (deprecated)
-chain = LLMChain(llm=llm, prompt=prompt)
-workflow = SequentialChain(chains=[chain1, chain2, chain3])
-
-# Yeni yaklaşım (modern)
-chain = prompt | llm
-workflow = RunnableLambda(func1) | RunnableLambda(func2) | RunnableLambda(func3)
-```
-
-**Avantajları:**
-- ✅ Deprecated uyarıları yok
-- ✅ Daha esnek ve okunabilir kod
-- ✅ LangChain'in gelecek versiyonlarıyla uyumlu
-- ✅ Daha iyi performans
 
 ### Veri Akışı
 
@@ -351,47 +313,6 @@ result = workflow.invoke({"text": complaint_text})
 print(result.get("refined_summary", result))
 ```
 
-## 🔍 Sorun Giderme
-
-### Yaygın Hatalar ve Çözümleri
-
-#### 1. ModuleNotFoundError: No module named 'dotenv'
-
-**Çözüm:**
-```bash
-pip install python-dotenv
-```
-
-#### 2. Deprecated Uyarıları
-
-**Çözüm:**
-Bu proje modern LCEL yaklaşımını kullandığı için deprecated uyarıları görmezsiniz. Eğer eski kod tabanından geçiş yapıyorsanız:
-- `LLMChain` yerine `RunnableLambda` kullanın
-- `SequentialChain` yerine pipe operatörü (`|`) kullanın
-- `.run()` yerine `.invoke()` kullanın
-
-#### 3. API Key veya Project ID Hatası
-
-**Çözüm:**
-- `.env` dosyasının doğru konumda olduğundan emin olun
-- Değişken isimlerinin doğru olduğunu kontrol edin
-- IBM Cloud konsolundan API key ve Project ID'yi doğrulayın
-
-#### 4. Bölge (Region) Hatası
-
-**Çözüm:**
-- `.env` dosyasındaki `WATSONX_URL` değerini kontrol edin
-- Projenizin hangi bölgede oluşturulduğunu IBM Cloud konsolundan kontrol edin
-- Bölge URL'lerinin doğru formatını kullanın: `https://{region}.ml.cloud.ibm.com`
-
-#### 5. Model ID Hatası veya Deprecated Model Uyarısı
-
-**Çözüm:**
-- IBM Cloud konsolundan mevcut model ID'lerini kontrol edin
-- Model ID formatı: `ibm/{model-name}`
-- `ibm/granite-3-8b-instruct` deprecated durumdadır, `ibm/granite-4-h-small` kullanın
-- Model lifecycle bilgileri için: https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-model-lifecycle.html
-
 ## 📚 Ek Kaynaklar
 
 - [LangChain Dokümantasyonu](https://python.langchain.com/)
@@ -413,14 +334,6 @@ Bu proje örnek amaçlı oluşturulmuştur. Kullanımınız kendi sorumluluğunu
 ## 👤 Yazar
 
 Bu proje LangChain ve IBM Watsonx entegrasyonu için bir örnek uygulamadır.
-
-## 🔄 Güncellemeler
-
-- **v1.1.0**: Modern LCEL yaklaşımına geçiş, deprecated uyarıları giderildi
-  - `LLMChain` ve `SequentialChain` yerine `RunnableLambda` kullanımı
-  - Model güncellemesi: `ibm/granite-4-h-small`
-  - `.invoke()` metodu kullanımı
-- **v1.0.0**: İlk sürüm - Temel sentiment analysis pipeline'ı
 
 ---
 
